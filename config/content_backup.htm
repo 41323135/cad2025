@@ -16,4 +16,33 @@
 <h2>plotter組立過程</h2>
 <p>無限的 solid shape mesh hingejoint</p>
 <h3>w10</h3>
-<p></p>
+<p>地10週去問了老師怎麼把.obj放進webots裡面，老師搖了搖頭開始螢幕廣播再教了一次，前面Tutorial看假的看沒有懂，但是聽完後還是有搞懂webots的架構啦</p>
+<p>就是Robot&gt;solid&gt;shape&gt;mesh一層一層的關係，一個樹狀擺放的方法就不一樣了</p>
+<p>組裝過程第一次直接整串串在一條上，畫面相當奇葩，分屍的桿件</p>
+<p>然後就去騷擾GPT了</p>
+<p>他說要分成成兩側去組，然後就變這樣了，tip不會設，哈哈XD<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" frameborder="0" height="535" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/lRmH5qwbrvc" title="分屍版Plotter" width="1007"></iframe>程式show一下，雖然不是我自己寫出來的</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from controller import Robot
+import math
+
+robot = Robot()
+timestep = int(robot.getBasicTimeStep())
+
+# 馬達初始化
+motor1 = robot.getDevice("t1")
+motor2 = robot.getDevice("t2")
+motor1.setPosition(float('inf'))
+motor2.setPosition(float('inf'))
+motor1.setVelocity(0.0)
+motor2.setVelocity(0.0)
+
+# 控制參數
+amplitude = 0.5  # 弧度範圍
+frequency = 0.5  # Hz
+
+while robot.step(timestep) != -1:
+    t = robot.getTime()
+    angle1 = amplitude * math.sin(2 * math.pi * frequency * t)
+    angle2 = amplitude * math.cos(2 * math.pi * frequency * t)
+    motor1.setVelocity(angle1)
+    motor2.setVelocity(angle2)</pre>
+<h3>w16</h3>
